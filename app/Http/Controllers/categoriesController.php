@@ -7,9 +7,13 @@ use Illuminate\Http\Request;
 
 class categoriesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    function __construct()
+    {
+        $this->middleware('permission:ver-categories|crear-categories|editar-categories|borrar-categories',['only'=>['index']]);
+        $this->middleware('permission:crear-categories',['only'=>['create','store']]);
+        $this->middleware('permission:editar-categories',['only'=>['edit','update']]);
+        $this->middleware('permission:borrar-categories',['only'=>['destroy']]);
+    }
     public function index()
     {
         $category=categories::all();

@@ -6,13 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use Iluminate\Support\Facades\BD;
+
 
 class RolController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:ver-rol | crear-rol | editar-rol | borrar',['only'=>['index']]);
+        $this->middleware('permission:ver-rol|crear-rol|editar-rol|borrar-rol',['only'=>['index']]);
         $this->middleware('permission:crear-rol',['only'=>['create','store']]);
         $this->middleware('permission:editar-rol',['only'=>['edit','update']]);
         $this->middleware('permission:borrar-rol',['only'=>['destroy']]);
@@ -24,7 +24,7 @@ class RolController extends Controller
     public function index()
     {
         $roles=Role::all();
-        return view('roles.index,',['roles'=>$roles]);
+        return view('dashboard.roles.index',['roles'=>$roles]);
     }
 
     /**
@@ -32,8 +32,8 @@ class RolController extends Controller
      */
     public function create()
     {
-        $permission=Permission::get();
-        return view('roles.crear');
+        $permission=Permission::all()->pluck(value:'name', key:'id');
+        return view('dashboard.roles.create',compact('permission'));
     }
 
     /**
@@ -42,8 +42,9 @@ class RolController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,['name'=>'required','permission'=>'required']);
-        $role=Role::create(['name'=>$request->input('permission')]);
-        $role->sycPermission($request->input('permission'));
+
+        $role=Role::create($request->only('name'));
+        $role->syncPermissions($request->input('permission',[]));
         return redirect()->route('roles.index');
 
     }
@@ -59,26 +60,22 @@ class RolController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit( $id)
+    public function edit( Role $role)
     {
-        $role=Role::find($id);
-        $permission=Permission::get();
-        $rolePermission=DB::table('role_has_permissions')->where('role_has_permission.role_id',$id)
-            ->puck('role_has_permissions.permissions_id','role_has_permissions.permissions_id')
-            ->all();
-            return view('roles.editar',compact('role','permission','rolePermissions'));
+        $role->load('permissions');
+        $permission=permission::all()->pluck(value:'name',key:'id');
+        return view('dashboard.roles.edit', compact('role', 'permission'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Role $role)
     {
         $this->validate($request,['name'=>'required','permission' =>'required']);
-        $role=Role::find($id);
-        $role->name=$request->input('name');
-        $role->save();
-        $role->syncPermissions($request->input('permission'));
+
+        $role->update($request->only('name'));    
+        $role->permissions()->sync($request->input('permission',[]));
         return redirect()->route('roles.index');
     }
 
@@ -87,6 +84,8 @@ class RolController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $rol=Role::find($id);
+        DB::table('roles')->where('id',$id)->delete();
+        return redirect()->route('roles.index');
     }
 }

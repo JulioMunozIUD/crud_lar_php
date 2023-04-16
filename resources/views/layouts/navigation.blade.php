@@ -2,7 +2,7 @@
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
-            <div class="flex">
+            < class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
@@ -16,7 +16,26 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
-            </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="url('dashboard/posts')" :active="request()->routeIs('posts')">
+                        {{ __('Post') }}
+                    </x-nav-link>
+                </div>        
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="url('dashboard/categories')" :active="request()->routeIs('category')">
+                        {{ __('Categoria') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="url('roles')" :active="request()->routeIs('roles')">
+                        {{ __('Roles') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="url('usuarios')" :active="request()->routeIs('usuario')">
+                        {{ __('Usuarios') }}
+                    </x-nav-link>
+                </div>             
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">

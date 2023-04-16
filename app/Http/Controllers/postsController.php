@@ -9,9 +9,13 @@ use Illuminate\Http\Request;
 
 class postsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    function __construct()
+    {
+        $this->middleware('permission:ver-posts|crear-posts|editar-posts|borrar-rol',['only'=>['index']]);
+        $this->middleware('permission:crear-posts',['only'=>['create','store']]);
+        $this->middleware('permission:editar-posts',['only'=>['edit','update']]);
+        $this->middleware('permission:borrar-posts',['only'=>['destroy']]);
+    }
     public function index()
     {
         $post=posts::all();       
