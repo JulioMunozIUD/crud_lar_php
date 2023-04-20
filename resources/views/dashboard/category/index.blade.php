@@ -1,9 +1,14 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            <main>
-                <div class= "container py-4">
-                    <h2>Categorias</h2>
+        <h1 class="font-semibold text-xl text-gray-800 leading-tight">
+            Categorias
+        </h1>
+    </x-slot>
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    
                     @can('crear-categories')
                     <a href="{{ route('categories.create') }}" class="btn btn-primary btn-sm">Nueva Categoria</a> 
                     @endcan                    
@@ -47,9 +52,12 @@
                         </tbody>
                     </table>
                 </div>
-            </main>
-        </h2>
-    </x-slot>
+            </div>
+        </div>
+    </div>
+       
+        
+
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">

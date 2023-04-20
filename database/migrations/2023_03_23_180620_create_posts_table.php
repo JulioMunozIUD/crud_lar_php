@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('name',100)->nullable()->default('text');
+            $table->string('autor',100)->nullable()->default('text');
             $table->biginteger('category_id')->unsigned()->nullable();
             $table->text('description')->nullable();
             $table->enum('state',['post', 'no_post'])->defaul('no_post');
