@@ -3,43 +3,37 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             <main>
                 <div class= "container py-4">
-                    <h2>Post Publicados</h2>
+                    <h2>Reply Publicados</h2>
                     @can('crear-post')                     
-                    <a href="{{ route('posts.create') }}" class="btn btn-primary btn-sm">Nuevo Post</a>
+                    <a href="{{ route('reply.create') }}" class="btn btn-primary btn-sm">Nuevo Reply</a>
                     @endcan
                     <table class="table table-info table-striped">
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Nombre</th>
-                                <th>Categoria</th>
-                                <th>Descripción</th>
-                                <th>Estado</th>
+                                <th>Post</th>
+                                <th>Texto</th>                                
                                 <th>Fecha de creación</th>
                                 <th>Fecha de modificación</th>
-                                <th></th>
                                 <th>Editar</th>
                                 <th>Eliminar</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($post as $post)
+                            @foreach ($reply as $reply)
                             <tr>
-                                <td>{{ $post->id }}</td>
-                                <td>{{ $post->name }}</td>
-                                <td>{{ $post->categories->name ?? 'Sin clasificación' }}</td>
-                                <td>{{ $post->description }}</td>
-                                <td>{{ $post->state }}</td>
-                                <td>{{ $post->created_at }}</td>
-                                <td>{{ $post->updated_at }}</td>
-                                <td>{{ $post->response }}</td>                                
+                                <td>{{ $reply->id }}</td>
+                                <td>{{ $reply->post_id }}</td>
+                                <td>{{ $reply->description }}</td>                              
+                                <td>{{ $reply->created_at }}</td>
+                                <td>{{ $reply->updated_at }}</td>
                                 <td>
-                                    @can('editar-post')                                       
-                                    <a href="{{ url('dashboard/posts/'.$post->id.'/edit') }}" class="bi bi-pencil-fill" ></a></td>
+                                    @can('editar-reply')                                       
+                                    <a href="{{ url('reply/'.$reply->id.'/edit') }}" class="bi bi-pencil-fill" ></a></td>
                                     @endcan
                                 <td>
-                                    @can('borrar-post')                                      
-                                    <form action="{{ url('dashboard/posts/'.$post->id) }}"  method="post">
+                                    @can('borrar-reply')                                      
+                                    <form action="{{ url('reply/'.$reply->id) }}"  method="post">
                                     @method("DELETE")
                                     @csrf
                                     <button class="bi bi-backspace-fill" type="submit"></button>
@@ -67,4 +61,3 @@
         </div>
     </div>
 </x-app-layout>
-

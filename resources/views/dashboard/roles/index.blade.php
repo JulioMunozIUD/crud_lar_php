@@ -45,7 +45,7 @@
                                          
                                         @endcan
                                         <td>
-                                            @can('eliminar-rol')
+                                            @can('borrar-rol')
                                             <form action="{{ url('roles/'.$rol->id) }}" method="post">
                                                 @method("DELETE")
                                                 @csrf

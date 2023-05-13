@@ -5,7 +5,7 @@ use App\Http\Controllers\postsController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\ProfileController;
-use App\Models\categories;
+use App\Http\Controllers\ReplyController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,4 +37,5 @@ require __DIR__.'/auth.php';
 Route::resource('/dashboard/categories',categoriesController::class);
 Route::resource('/dashboard/posts',postsController::class);
 Route::resource('/roles',RolController::class);
-Route::resource('usuarios',UsuarioController::class);
+Route::resource('/usuarios',UsuarioController::class);
+Route::resource('/reply',ReplyController::class);

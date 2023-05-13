@@ -39,7 +39,7 @@
                         <div class="mb-3 row">
                             <label for="name">Confirmar Password</label>
                             <div class="col-sm-5">
-                                <input class="form-control" type="text" name="password" id="name"
+                                <input class="form-control" type="text" name="comfirm-password" id="confirm-password"
                                 value="">
                             </div>
                         </div>
